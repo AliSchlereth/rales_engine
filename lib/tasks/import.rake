@@ -4,10 +4,10 @@ desc "Import data files"
 task :import => [:environment] do
 
   customer_file = "db/data/customers.csv"
-  invoice_items_file = "db/data/invoice_items.csv"
+  merchant_file = "db/data/merchants.csv"
+  item_file = "db/data/items.csv"
   invoice_file = "db/data/invoices.csv"
-  items_file = "db/data/items.csv"
-  merchants_file = "db/data/merchants.csv"
+  invoice_items_file = "db/data/invoice_items.csv"
   transaction_file = "db/data/transactions.csv"
 
   CSV.foreach(customer_file, :headers => true) do |row|
@@ -17,7 +17,34 @@ task :import => [:environment] do
       })
   end
 
-  # CSV.foreach(items_file)
+  CSV.foreach(merchant_file, :headers => true) do |row|
+    Merchant.first_or_create({
+      name: row[1],
+      created_at: row[2],
+      updated_at: row[3]
+      })
+  end
+
+  CSV.foreach(item_file, :headers => true) do |row|
+    Item.first_or_create({
+      name: row[1],
+      description: row[2],
+      unit_price: row[3],
+      merchant_id: row[4],
+      created_at: row[5],
+      updated_at: row[6]
+      })
+  end
+
+  CSV.foreach(invoice_file, :headers => true) do |row|
+    Invoice.first_or_create({
+      customer_id: row[1],
+      merchant_id: row[2],
+      status: row[3],
+      created_at: row[4],
+      updated_at: row[5]
+      })
+  end
 
   CSV.foreach(invoice_items_file, :headers => true) do |row|
     InvoiceItem.first_or_create ({
@@ -30,5 +57,14 @@ task :import => [:environment] do
     })
   end
 
+  CSV.foreach(transaction_file, :headers => true) do |row|
+    Transaction.first_or_create({
+      invoice_id: row[1],
+      credit_card_number: row[2],
+      result: row[4],
+      created_at: row[5],
+      updated_at: row[6]
+      })
+  end
 
 end
