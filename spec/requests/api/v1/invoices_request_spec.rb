@@ -79,4 +79,18 @@ describe "invoices endpoints" do
       expect(invoices.count).to eq(3)
     end
   end
+  
+  context "GET api/v1/invoices/random.json" do
+    it "returns an invoice when random is queried" do
+      invoice_1 = create(:invoice)
+      invoice_2 = create(:invoice)
+      
+      get "/api/v1/invoices/random.json" 
+      
+      invoice = JSON.parse(response.body)
+      
+      expect(response).to be_success
+      expect(invoice["status"]).to be_truthy
+    end
+  end
 end
