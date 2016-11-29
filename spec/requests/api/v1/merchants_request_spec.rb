@@ -69,4 +69,18 @@ describe "merchant endpoints" do
       expect(merchants.count).to eq(2)
     end
   end
+
+  context "GET merchants/random" do
+    it "returns a random merchant record" do
+      merchant1 = Merchant.create(name: "Name1")
+      merchant2 = Merchant.create(name: "Name2")
+
+      get "/api/v1/merchants/random"
+
+      json_merchant = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(json_merchant['id']).to be_truthy
+    end
+  end
 end
