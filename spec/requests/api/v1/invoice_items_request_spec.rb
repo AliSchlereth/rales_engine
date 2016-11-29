@@ -38,17 +38,17 @@ describe "invoice_items endpoints" do
       expect(result["id"]).to_not eq(invoice_item_1.id)
     end
     
-    xit "returns the right invoice_item for customer_id" do
-      customer_1 = create(:customer)
-      customer_2 = create(:customer)
-      invoice_item_1 = create(:invoice_item, customer_id: "#{customer_1.id}")
-      invoice_item_2 = create(:invoice_item, customer_id: "#{customer_2.id}")
+    it "returns the right invoice_item for invoice_id" do
+      invoice_1 = create(:invoice)
+      invoice_2 = create(:invoice)
+      invoice_item_1 = create(:invoice_item, invoice_id: "#{invoice_1.id}")
+      invoice_item_2 = create(:invoice_item, invoice_id: "#{invoice_2.id}")
       
-      get "/api/v1/invoice_items/find?customer_id=#{customer_1.id}"
+      get "/api/v1/invoice_items/find?invoice_id=#{invoice_1.id}"
     
       result = JSON.parse(response.body)
       expect(response).to be_success
-      expect(result["customer_id"]).to eq("#{customer_1.id}".to_i)
+      expect(result["invoice_id"]).to eq("#{invoice_1.id}".to_i)
       expect(result["id"]).to_not eq(invoice_item_2.id)
     end
     
@@ -65,14 +65,14 @@ describe "invoice_items endpoints" do
       expect(result["id"]).to_not eq(invoice_item_2.id)
     end
     
-    xit "returns the all invoice_items for customer_id" do
-      customer_1 = create(:customer)
-      customer_2 = create(:customer)
-      invoice_item_1 = create(:invoice_item, customer_id: "#{customer_1.id}")
-      invoice_item_2 = create(:invoice_item, customer_id: "#{customer_1.id}")
-      invoice_item_3 = create(:invoice_item, customer_id: "#{customer_1.id}")
+    it "returns the all invoice_items for item_id" do
+      item_1 = create(:item)
+      item_2 = create(:item)
+      invoice_item_1 = create(:invoice_item, item_id: "#{item_1.id}")
+      invoice_item_2 = create(:invoice_item, item_id: "#{item_1.id}")
+      invoice_item_3 = create(:invoice_item, item_id: "#{item_1.id}")
       
-      get "/api/v1/invoice_items/find_all?customer_id=#{customer_1.id}"
+      get "/api/v1/invoice_items/find_all?item_id=#{item_1.id}"
     
       invoice_items = JSON.parse(response.body)
       expect(response).to be_success
