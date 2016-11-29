@@ -22,6 +22,19 @@ describe "invoices endpoints" do
       show_invoice = JSON.parse(response.body)
       expect(response).to be_success
       expect(show_invoice["status"]).to eq("success")
+    end
   end
-end
+  
+  context 'GET /invoices/find' do
+    it "returns the right invoice" do
+      invoice_1 = create(:invoice, status: "success")
+      invoice_2 = create(:invoice, status: "fail")
+    
+      result = get "/api/v1/invoices/find?status=fail"
+    
+      expect(response).to be_success
+      expect(result["status"]).to eq("fail")
+      expect(result["id"]).to_not eq(invoice_1.id)
+    end
+  end
 end
