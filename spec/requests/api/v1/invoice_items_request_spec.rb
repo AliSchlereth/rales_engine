@@ -81,7 +81,7 @@ describe "invoice_items endpoints" do
   end
   
   context "GET api/v1/invoice_items/random.json" do
-    xit "returns an invoice_item when random is queried" do
+    it "returns an invoice_item when random is queried" do
       invoice_item_1 = create(:invoice_item)
       invoice_item_2 = create(:invoice_item)
       
@@ -90,7 +90,7 @@ describe "invoice_items endpoints" do
       invoice_item = JSON.parse(response.body)
       
       expect(response).to be_success
-      expect(invoice_item["status"]).to be_truthy
+      expect(invoice_item["quantity"]).to be_truthy
     end
   end
 end
