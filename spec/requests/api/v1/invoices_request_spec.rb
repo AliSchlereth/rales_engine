@@ -30,8 +30,9 @@ describe "invoices endpoints" do
       invoice_1 = create(:invoice, status: "success")
       invoice_2 = create(:invoice, status: "fail")
     
-      result = get "/api/v1/invoices/find?status=fail"
+      get "/api/v1/invoices/find?status=fail"
     
+      result = JSON.parse(response.body)
       expect(response).to be_success
       expect(result["status"]).to eq("fail")
       expect(result["id"]).to_not eq(invoice_1.id)
