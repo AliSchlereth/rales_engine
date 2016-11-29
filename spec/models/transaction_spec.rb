@@ -8,18 +8,18 @@ RSpec.describe Transaction, type: :model do
     end
 
     it "is invalid without a result" do
-      transaction = Transaction.new(credt_card_number: 123, invoice_id: 1)
+      transaction = Transaction.new(credit_card_number: 123, invoice_id: 1)
       expect(transaction).to_not be_valid
     end
 
     it "is invalid without an invoice" do
-      transaction = Transaction.new(credt_card_number: 123, result: "Success")
+      transaction = Transaction.new(credit_card_number: 123, result: "Success")
       expect(transaction).to_not be_valid
     end
 
     it "is valid with a result, credit_card_number, and invoice_id" do
       invoice = create(:invoice)
-      transaction = Transaction.create(credt_card_number: 123, result: "success", invoice: invoice)
+      transaction = Transaction.create(credit_card_number: 123, result: "success", invoice: invoice)
       expect(transaction).to be_valid
     end
   end
@@ -27,7 +27,7 @@ RSpec.describe Transaction, type: :model do
   context "relationships" do
     it "resonds to invoice" do
       invoice = create(:invoice)
-      transaction = Transaction.create(credt_card_number: 123, result: "success", invoice: invoice)
+      transaction = Transaction.create(credit_card_number: 123, result: "success", invoice: invoice)
       expect(transaction).to respond_to(:invoice)
     end
   end
