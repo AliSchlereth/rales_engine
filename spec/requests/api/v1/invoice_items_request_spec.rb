@@ -1,0 +1,96 @@
+require 'rails_helper'
+
+describe "invoice_items endpoints" do
+  context 'GET /invoice_items' do
+    it "returns a list of all invoice_items" do
+      create_list(:invoice_item, 3)
+      
+      get "/api/v1/invoice_items"
+      
+      invoice_items = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(invoice_items.count).to eq(3)
+    end
+  end
+  
+  context 'GET /invoice_items/:id' do
+    xit "returns a specific invoice_item" do
+      invoice_item = create(:invoice_item, status: "success")
+      
+      get "/api/v1/invoice_items/#{invoice_item.id}"
+      
+      show_invoice_item = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(show_invoice_item["status"]).to eq("success")
+    end
+  end
+  
+  context 'GET /invoice_items/find' do
+    xit "returns the right invoice_item for status" do
+      invoice_item_1 = create(:invoice_item, status: "success")
+      invoice_item_2 = create(:invoice_item, status: "fail")
+    
+      get "/api/v1/invoice_items/find?status=fail"
+    
+      result = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(result["status"]).to eq("fail")
+      expect(result["id"]).to_not eq(invoice_item_1.id)
+    end
+    
+    xit "returns the right invoice_item for customer_id" do
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
+      invoice_item_1 = create(:invoice_item, customer_id: "#{customer_1.id}")
+      invoice_item_2 = create(:invoice_item, customer_id: "#{customer_2.id}")
+      
+      get "/api/v1/invoice_items/find?customer_id=#{customer_1.id}"
+    
+      result = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(result["customer_id"]).to eq("#{customer_1.id}".to_i)
+      expect(result["id"]).to_not eq(invoice_item_2.id)
+    end
+    
+    xit "returns the right invoice_item for created_at" do
+      invoice_item_1 = create(:invoice_item)
+      invoice_item_2 = create(:invoice_item)
+      
+      get "/api/v1/invoice_items/find?created_at=#{invoice_item_1.created_at.strftime("%a, %-d %b %Y %H:%M:%S UTC +00:00")}"
+      result = JSON.parse(response.body)
+      binding.pry
+      
+      expect(response).to be_success
+      expect(result["created_at"]).to eq("#{invoice_item_1.created_at}")
+      expect(result["id"]).to_not eq(invoice_item_2.id)
+    end
+    
+    xit "returns the all invoice_items for customer_id" do
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
+      invoice_item_1 = create(:invoice_item, customer_id: "#{customer_1.id}")
+      invoice_item_2 = create(:invoice_item, customer_id: "#{customer_1.id}")
+      invoice_item_3 = create(:invoice_item, customer_id: "#{customer_1.id}")
+      
+      get "/api/v1/invoice_items/find_all?customer_id=#{customer_1.id}"
+    
+      invoice_items = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(invoice_items.count).to eq(3)
+    end
+  end
+  
+  context "GET api/v1/invoice_items/random.json" do
+    xit "returns an invoice_item when random is queried" do
+      invoice_item_1 = create(:invoice_item)
+      invoice_item_2 = create(:invoice_item)
+      
+      get "/api/v1/invoice_items/random.json" 
+      
+      invoice_item = JSON.parse(response.body)
+      
+      expect(response).to be_success
+      expect(invoice_item["status"]).to be_truthy
+    end
+  end
+end
