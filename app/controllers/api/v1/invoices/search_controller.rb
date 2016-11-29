@@ -1,4 +1,9 @@
 class Api::V1::Invoices::SearchController < ApplicationController
+  
+  def index
+    render json: Invoice.where(valid_search_parameters)
+  end
+  
   def show
     render json: Invoice.find_by(valid_search_parameters)
   end
