@@ -17,7 +17,14 @@ RSpec.describe Transaction, type: :model do
       transaction = Transaction.create(credt_card_number: 123, result: "success", invoice: invoice)
       expect(transaction).to be_valid
     end
+  end
 
+  context "relationships" do
+    it "resonds to invoice" do
+      invoice = create(:invoice)
+      transaction = Transaction.create(credt_card_number: 123, result: "success", invoice: invoice)
+      expect(transaction).to respond_to(:invoice)
+    end
   end
 
 end
