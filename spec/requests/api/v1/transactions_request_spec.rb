@@ -34,6 +34,20 @@ describe "GET /transactions" do
       expect(response).to be_success
       expect(result['credit_card_number']).to eq(trans1.credit_card_number)
     end
+
+    it "returns all results by criteria" do
+      invoice = create(:invoice)
+      trans1 = Transaction.create(credit_card_number: 1234, result: "fail", invoice_id: invoice.id)
+      trans2 = Transaction.create(credit_card_number: 1234, result: "success", invoice_id: invoice.id)
+
+
+      get "/api/v1/transactions/find_all?credit_card_number=1234"
+
+      result = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(result.count).to eq(2)
+    end
   end
 
   context "GET /transactions/random" do
