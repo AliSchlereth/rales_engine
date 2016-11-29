@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :item do
     name "MyText"
     description "MyText"
-    merchant nil
+    merchant
+    unit_price 1
   end
 end
