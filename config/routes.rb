@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get '/customers/random', to: "customers/random#show"
       get '/transactions/find', to: "transactions/search#show"
       get '/transactions/find_all', to: "transactions/search#index"
+      get '/transactions/random', to: "transactions/random#show"
       resources :merchants, only: [:index, :show]
       resources :invoices, only: [:index, :show]
       resources :customers, only: [:index, :show]

@@ -32,7 +32,20 @@ describe "GET /transactions" do
       result = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(response['credit_card_number']).to eq(trans1.credit_card_number)
+      expect(result['credit_card_number']).to eq(trans1.credit_card_number)
+    end
+  end
+
+  context "GET /transactions/random" do
+    it "returns a single transaction" do
+      trans1, trans2 = create_list(:transaction, 2)
+
+      get "/api/v1/transactions/random"
+
+      result = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(result['id']).to be_truthy
     end
   end
 end
