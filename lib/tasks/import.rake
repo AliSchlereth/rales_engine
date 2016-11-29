@@ -11,14 +11,14 @@ task :import => [:environment] do
   transaction_file = "db/data/transactions.csv"
 
   CSV.foreach(customer_file, :headers => true) do |row|
-      Customer.first_or_create ({
+      Customer.create({
         first_name: row[1],
         last_name: row[2]
       })
   end
 
   CSV.foreach(merchant_file, :headers => true) do |row|
-    Merchant.first_or_create({
+    Merchant.create({
       name: row[1],
       created_at: row[2],
       updated_at: row[3]
@@ -26,7 +26,7 @@ task :import => [:environment] do
   end
 
   CSV.foreach(item_file, :headers => true) do |row|
-    Item.first_or_create({
+    Item.create({
       name: row[1],
       description: row[2],
       unit_price: row[3],
@@ -37,7 +37,7 @@ task :import => [:environment] do
   end
 
   CSV.foreach(invoice_file, :headers => true) do |row|
-    Invoice.first_or_create({
+    Invoice.create({
       customer_id: row[1],
       merchant_id: row[2],
       status: row[3],
@@ -47,7 +47,7 @@ task :import => [:environment] do
   end
 
   CSV.foreach(invoice_items_file, :headers => true) do |row|
-    InvoiceItem.first_or_create ({
+    InvoiceItem.create({
       item_id: row[1],
       invoice_id: row[2],
       quantity: row[3],
@@ -58,7 +58,7 @@ task :import => [:environment] do
   end
 
   CSV.foreach(transaction_file, :headers => true) do |row|
-    Transaction.first_or_create({
+    Transaction.create({
       invoice_id: row[1],
       credit_card_number: row[2],
       result: row[4],
