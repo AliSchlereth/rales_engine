@@ -14,5 +14,16 @@ describe "merchant endpoints" do
     end
   end
 
-  
+  context "GET /merchant/:id" do
+    it "returns a merchant" do
+      merchant = create(:merchant)
+
+      get "/api/v1/merchants/#{merchant.id}"
+
+      json_merchant = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(json_merchant['id']).to eq(merchant.id) 
+    end
+  end
 end
