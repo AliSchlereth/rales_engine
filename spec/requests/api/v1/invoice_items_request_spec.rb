@@ -14,27 +14,27 @@ describe "invoice_items endpoints" do
   end
   
   context 'GET /invoice_items/:id' do
-    xit "returns a specific invoice_item" do
-      invoice_item = create(:invoice_item, status: "success")
+    it "returns a specific invoice_item" do
+      invoice_item = create(:invoice_item, quantity: 17)
       
       get "/api/v1/invoice_items/#{invoice_item.id}"
       
       show_invoice_item = JSON.parse(response.body)
       expect(response).to be_success
-      expect(show_invoice_item["status"]).to eq("success")
+      expect(show_invoice_item["quantity"]).to eq(17)
     end
   end
   
   context 'GET /invoice_items/find' do
-    xit "returns the right invoice_item for status" do
-      invoice_item_1 = create(:invoice_item, status: "success")
-      invoice_item_2 = create(:invoice_item, status: "fail")
+    it "returns the right invoice_item for quantity" do
+      invoice_item_1 = create(:invoice_item, quantity: 98)
+      invoice_item_2 = create(:invoice_item, quantity: 7)
     
-      get "/api/v1/invoice_items/find?status=fail"
+      get "/api/v1/invoice_items/find?quantity=7"
     
       result = JSON.parse(response.body)
       expect(response).to be_success
-      expect(result["status"]).to eq("fail")
+      expect(result["quantity"]).to eq(7)
       expect(result["id"]).to_not eq(invoice_item_1.id)
     end
     
