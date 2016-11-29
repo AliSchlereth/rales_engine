@@ -38,5 +38,21 @@ describe "merchant endpoints" do
       expect(response).to be_success
       expect(json_merchant['name']).to eq(merchant1.name)
     end
+
+    # it "returns a merchant by created_at" do
+    #   # merchant1, merchant2 = create_list(:merchant, 2)
+    #   merchant1 = Merchant.create(name: "Name1")
+    #   merchant2 = Merchant.create(name: "Name2")
+    #   # desired_created_at = merchant1.created_at.utc.strftime(
+    #   #                     "%a, %-d %b %Y %H:%M:%S UTC +%H:%M"
+    #   #                     )
+    #   get "/api/v1/merchants/find?created_at=#{merchant1.created_at}"
+    #
+    #   json_merchant = JSON.parse(response.body)
+    #   binding.pry
+    #   expect(response).to be_success
+    #   expect(json_merchant['created_at']).to eq(merchant1.created_at)
+    #
+    # end
   end
 end
