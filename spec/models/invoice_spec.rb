@@ -35,5 +35,38 @@ RSpec.describe Invoice, type: :model do
 		expect(invoice).to be_valid
 	 end
 	end
+	
+	context "relationships" do
+		it "responds to customers" do
+			invoice = create(:invoice)
+			
+			expect(invoice).to respond_to(:customer)
+		end
+		
+		it "responds to merchants" do
+			invoice = create(:invoice)
+			
+			expect(invoice).to respond_to(:merchant)
+		end
+		
+		it "responds to invoice items" do
+			invoice = create(:invoice)
+			
+			expect(invoice).to respond_to(:invoice_items)
+		end
+		
+		it "responds to items" do
+			invoice = create(:invoice)
+			
+			expect(invoice).to respond_to(:items)
+		end
+		
+		it "responds to transactions" do
+			invoice = create(:invoice)
+			
+			expect(invoice).to respond_to(:transactions)
+		end
+		
+	end
 
 end
