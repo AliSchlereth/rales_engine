@@ -4,4 +4,10 @@ class InvoiceItem < ApplicationRecord
   
   belongs_to :item
   belongs_to :invoice
+  
+  def self.invoice_item_randomizer
+    total = all.count - 1
+    random_position = rand(0..total)
+    all[random_position]
+  end
 end
