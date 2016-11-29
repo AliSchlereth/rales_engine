@@ -22,8 +22,21 @@ describe "merchant endpoints" do
 
       json_merchant = JSON.parse(response.body)
 
-      expect(json_merchant['status']).to eq("success")
+      expect(response).to be_success
       expect(json_merchant['id']).to eq(merchant.id)
+    end
+  end
+
+  context "GET merchant/find" do
+    it "returns a merchant by name" do
+      merchant1, merchant2 = create_list(:merchant, 2)
+
+      get "/api/v1/merchants/find?name=#{merchant1.name}"
+
+      json_merchant = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(json_merchant['name']).to eq(merchant1.name)
     end
   end
 end
