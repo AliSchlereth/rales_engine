@@ -12,4 +12,16 @@ describe "invoices endpoints" do
       expect(invoices.count).to eq(3)
     end
   end
+  
+  context 'GET /invoices/:id' do
+    it "returns a specific invoice" do
+      invoice = create(:invoice, status: "success")
+      
+      get "/api/v1/invoices/#{invoice.id}"
+      
+      show_invoice = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(show_invoice["status"]).to eq("success")
+  end
+end
 end
