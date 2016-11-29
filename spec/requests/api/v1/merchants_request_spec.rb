@@ -27,7 +27,7 @@ describe "merchant endpoints" do
     end
   end
 
-  context "GET merchant/find" do
+  context "GET merchants/find" do
     it "returns a merchant by name" do
       merchant1, merchant2 = create_list(:merchant, 2)
 
@@ -54,5 +54,19 @@ describe "merchant endpoints" do
     #   expect(json_merchant['created_at']).to eq(merchant1.created_at)
     #
     # end
+  end
+
+  context "GET merchants/find_all" do
+    it "returns all merchants by name" do
+      merchant1 = Merchant.create(name: "Name")
+      merchant2 = Merchant.create(name: "Name")
+
+      get "/api/v1/merchants/find_all?name=Name"
+
+      merchants = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(merchants.count).to eq(2)
+    end
   end
 end
