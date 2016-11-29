@@ -22,8 +22,8 @@ describe "merchant endpoints" do
 
       json_merchant = JSON.parse(response.body)
 
-      expect(response).to be_success
-      expect(json_merchant['id']).to eq(merchant.id) 
+      expect(json_merchant['status']).to eq("success")
+      expect(json_merchant['id']).to eq(merchant.id)
     end
   end
 end
