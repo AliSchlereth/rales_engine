@@ -17,6 +17,12 @@ RSpec.describe Item, type: :model do
       expect(item).to_not be_valid
     end
 
+    it "is invalid without a merchant" do
+      item = Item.new(unit_price: 2, name: "Name", description: "Things")
+      expect(item).to_not be_valid
+    end
+
+
     it "is valid with a name, unit price, and description" do
       merchant = create(:merchant)
       item = Item.create(unit_price: 2, description: "Things", name: "Name", merchant: merchant)

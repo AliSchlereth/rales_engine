@@ -12,6 +12,11 @@ RSpec.describe Transaction, type: :model do
       expect(transaction).to_not be_valid
     end
 
+    it "is invalid without an invoice" do
+      transaction = Transaction.new(credt_card_number: 123, result: "Success")
+      expect(transaction).to_not be_valid
+    end
+
     it "is valid with a result, credit_card_number, and invoice_id" do
       invoice = create(:invoice)
       transaction = Transaction.create(credt_card_number: 123, result: "success", invoice: invoice)
