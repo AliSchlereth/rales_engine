@@ -16,3 +16,18 @@ describe "GET /api/v1/items/:id/invoice_items" do
   end
 
 end
+
+describe "GET GET /api/v1/items/:id/merchant" do
+  it "returns merchants for an item" do
+    merchant = create(:merchant)
+    item = Item.create(name: "Name", description: "Thing", unit_price: 234, merchant: merchant)
+
+    get "/api/v1/items/#{item.id}/merchant"
+
+    result = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(result['id']).to eq(merchant.id)
+  end
+
+end
