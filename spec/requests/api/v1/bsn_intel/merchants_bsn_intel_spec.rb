@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "GET /api/v1/merchants/most_revenue?quantity=x" do
-  it "returns the top x merchants ranked by total revenue" do
+  before :each do
     merchant1, merchant2, merchant3, merchant4 = create_list(:merchant, 4)
     item1 = create(:item, merchant_id: merchant1.id)
     item2 = create(:item, merchant_id: merchant1.id)
@@ -19,9 +19,8 @@ describe "GET /api/v1/merchants/most_revenue?quantity=x" do
     transaction = create(:transaction, result: "failed", invoice_id: invoice2.id)
     transaction = create(:transaction, result: "success", invoice_id: invoice3.id)
     transaction = create(:transaction, result: "success", invoice_id: invoice4.id)
-
-    create_all_the_things
-    
+  end
+  it "returns the top x merchants ranked by total revenue" do
 
     get "/api/v1/merchants/most_revenue?quantity=3"
 
@@ -31,6 +30,13 @@ describe "GET /api/v1/merchants/most_revenue?quantity=x" do
     expect(result.count).to eq(3)
   end
 
-  def create_all_the_things
+  it "returns top x merchants ranked by total number of items sold" do
+    get '/api/v1/merchants/most_items?quantity=2'
+
+    result = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(result.count).to eq(2)
   end
+
 end

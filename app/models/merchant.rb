@@ -12,19 +12,18 @@ class Merchant < ActiveRecord::Base
     all[random_position]
   end
 
-  def self.most_revenue(qty)
-    # binding.pry
-    # The invoices of a Merchant where their transaction is successful
-    # find the invoice items from those invoices
-    # calculate the revenue (qty * price)
+  def self.most_revenue(quantity)
     joins(invoices: [:invoice_items, :transactions]).merge(Transaction.success)
                                                    .group(:id)
                                                    .order("sum(quantity * unit_price) DESC")
-                                                   .limit(qty)
-    #  joins(invoices: [:invoice_items, :transactions]).where(transactions: {result: 'success'})
-    #                                                 .group(:id)
-    #                                                 .order("sum(quantity * unit_price) DESC")
-    #                                                 .limit(qty)
+                                                   .limit(quantity)
+  end
+
+  def self.most_items(quantity)
+    joins(invoices: [:invoice_items, :transactions]).merge(Transaction.success)
+                                                   .group(:id)
+                                                   .order("sum(invoice_items.quantity) DESC")
+                                                   .limit(quantity)
   end
 
   def self.successful

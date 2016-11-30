@@ -3,10 +3,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
 
-      # get '/merchants/find', to: "merchants/search#show"
+      get '/merchants/find', to: "merchants/search#show"
       get '/merchants/find_all', to: "merchants/search#index"
       get '/merchants/random', to: "merchants/random#show"
       get '/merchants/most_revenue', to: "merchants/most_revenue#index"
+      get '/merchants/most_items', to: "merchants/most_items#index"
 
       get '/invoices/find', to: "invoices/search#show"
       get '/invoices/find_all', to: "invoices/search#index"
@@ -29,15 +30,17 @@ Rails.application.routes.draw do
       get '/invoice_items/random', to: "invoice_items/random#show"
 
       resources :merchants, only: [:index, :show] do
-        collection do
-          # get '/merchants/find', to: "merchants/search#show"
-          get 'find', to: 'merchants/search#show'
-        end
-
-        member do
-          get 'items', to: 'merchants/items#index' #api/v1/merchants/17/items
-          get 'invoices', to: 'merchants/invoices#index'
-        end
+        # collection do
+        #   # get '/merchants/find', to: "merchants/search#show"
+        #   get 'find', to: 'merchants/search#show'
+        # end
+        #
+        # member do
+        #   get 'items', to: 'merchants/items#index' #api/v1/merchants/17/items
+        #   get 'invoices', to: 'merchants/invoices#index'
+        # end
+        resources :items, only: [:index], controller: "merchants/items"
+        resources :invoices, only: [:index], controller: "merchants/invoices"
       end
 
       resources :invoices, only: [:index, :show] do
