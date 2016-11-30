@@ -15,11 +15,16 @@ describe "GET /api/v1/merchants/most_revenue?quantity=x" do
     invoice_item2 = create(:invoice_item, item_id: item2.id, invoice_id: invoice2.id)
     invoice_item3 = create(:invoice_item, item_id: item3.id, invoice_id: invoice3.id)
     invoice_item4 = create(:invoice_item, item_id: item4.id, invoice_id: invoice4.id)
+    transaction = create(:transaction, result: "success", invoice_id: invoice1.id)
+    transaction = create(:transaction, result: "failed", invoice_id: invoice2.id)
+    transaction = create(:transaction, result: "success", invoice_id: invoice3.id)
+    transaction = create(:transaction, result: "success", invoice_id: invoice4.id)
 
     get "/api/v1/merchants/most_revenue?quantity=3"
 
     result = JSON.parse(response.body)
 
+    expect(response).to be_success
     expect(result.count).to eq(3)
   end
 end
