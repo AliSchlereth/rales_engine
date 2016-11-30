@@ -64,16 +64,15 @@ describe "items endpoints" do
       expect(result["id"]).to_not eq(item_2.id)
     end
     
-    xit "returns the right item for created_at" do
-      item_1 = create(:item)
-      item_2 = create(:item)
+    it "returns the right item for created_at" do
+      item_1 = create(:item, created_at: "2012-03-27T14:56:04.000Z")
+      item_2 = create(:item, created_at: "2013-03-27T14:56:04.000Z")
       
-      get "/api/v1/items/find?created_at=#{item_1.created_at.strftime("%a, %-d %b %Y %H:%M:%S UTC +00:00")}"
+      get "/api/v1/items/find?created_at=#{item_1.created_at}"
       result = JSON.parse(response.body)
-      binding.pry
-      
+
       expect(response).to be_success
-      expect(result["created_at"]).to eq("#{item_1.created_at}")
+      expect(result["id"]).to eq("#{item_1.id}".to_i)
       expect(result["id"]).to_not eq(item_2.id)
     end
     

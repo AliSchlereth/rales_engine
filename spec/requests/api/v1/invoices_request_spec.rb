@@ -52,16 +52,15 @@ describe "invoices endpoints" do
       expect(result["id"]).to_not eq(invoice_2.id)
     end
     
-    xit "returns the right invoice for created_at" do
-      invoice_1 = create(:invoice)
-      invoice_2 = create(:invoice)
+    it "returns the right invoice for created_at" do
+      invoice_1 = create(:invoice, created_at: "2012-03-27T14:56:04.000Z")
+      invoice_2 = create(:invoice, created_at: "2013-03-27T14:56:04.000Z")
       
-      get "/api/v1/invoices/find?created_at=#{invoice_1.created_at.strftime("%a, %-d %b %Y %H:%M:%S UTC +00:00")}"
+      get "/api/v1/invoices/find?created_at=#{invoice_1.created_at}"
       result = JSON.parse(response.body)
-      binding.pry
       
       expect(response).to be_success
-      expect(result["created_at"]).to eq("#{invoice_1.created_at}")
+      expect(result["id"]).to eq("#{invoice_1.id}".to_i)
       expect(result["id"]).to_not eq(invoice_2.id)
     end
     
