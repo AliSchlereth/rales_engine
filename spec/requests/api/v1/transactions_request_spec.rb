@@ -32,7 +32,7 @@ describe "GET /transactions" do
       result = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(result['credit_card_number']).to eq(trans1.credit_card_number)
+      expect(result['credit_card_number']).to eq(trans1.credit_card_number.to_s)
     end
 
     it "returns all results by criteria" do
