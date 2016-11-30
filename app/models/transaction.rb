@@ -4,6 +4,9 @@ class Transaction < ApplicationRecord
 
   belongs_to :invoice
 
+  scope :success, -> { where(result: 'success') }
+
+
   def self.transaction_randomizer
     total = all.count - 1
     random_position = rand(0..total)
