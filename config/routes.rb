@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         resources :transactions, only: [:index], controller: "invoices/transactions"
         resources :invoice_items, only: [:index], controller: "invoices/invoice_items"
         resources :items, only: [:index], controller: "invoices/items"
+        get '/customer', to: 'invoices/customers#show'
       end
       
       resources :items, only: [:index, :show] do
