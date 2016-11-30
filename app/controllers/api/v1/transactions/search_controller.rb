@@ -10,7 +10,7 @@ class Api::V1::Transactions::SearchController < ApplicationController
 
   private
   def valid_search_parameters
-    params.permit(:credit_card_number, :result, :invoice_id, :created_at, :updated_at)
+    params.permit(:id, :credit_card_number, :result, :invoice_id, :created_at, :updated_at)
   end
 
 end
