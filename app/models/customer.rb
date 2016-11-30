@@ -3,6 +3,7 @@ class Customer < ApplicationRecord
   validates :first_name, presence: true
 
   has_many :invoices
+  has_many :transactions, through: :invoices
 
   def self.customer_randomizer
     total = all.count - 1
