@@ -20,11 +20,17 @@ describe "GET /api/v1/merchants/most_revenue?quantity=x" do
     transaction = create(:transaction, result: "success", invoice_id: invoice3.id)
     transaction = create(:transaction, result: "success", invoice_id: invoice4.id)
 
+    create_all_the_things
+    
+
     get "/api/v1/merchants/most_revenue?quantity=3"
 
     result = JSON.parse(response.body)
 
     expect(response).to be_success
     expect(result.count).to eq(3)
+  end
+
+  def create_all_the_things
   end
 end

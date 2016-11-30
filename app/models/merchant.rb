@@ -17,10 +17,18 @@ class Merchant < ActiveRecord::Base
     # The invoices of a Merchant where their transaction is successful
     # find the invoice items from those invoices
     # calculate the revenue (qty * price)
-    joins(invoices: [:invoice_items, :transactions]).where(transactions: {result: 'success'})
+    joins(invoices: [:invoice_items, :transactions]).merge(Transaction.success)
                                                    .group(:id)
                                                    .order("sum(quantity * unit_price) DESC")
                                                    .limit(qty)
+    #  joins(invoices: [:invoice_items, :transactions]).where(transactions: {result: 'success'})
+    #                                                 .group(:id)
+    #                                                 .order("sum(quantity * unit_price) DESC")
+    #                                                 .limit(qty)
+  end
+
+  def self.successful
+    alskdjflaksjdfkj
   end
 
 end
