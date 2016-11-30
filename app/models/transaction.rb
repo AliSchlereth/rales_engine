@@ -5,7 +5,7 @@ class Transaction < ApplicationRecord
   belongs_to :invoice
 
   scope :success, -> { where(result: 'success') }
-
+  scope :failed,  -> { where(result: 'failed') }
 
   def self.transaction_randomizer
     total = all.count - 1
