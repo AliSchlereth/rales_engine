@@ -8,9 +8,9 @@ class Api::V1::Customers::SearchController < ApplicationController
     render json: Customer.where(valid_search_parameters)
   end
 
-
   private
+  
   def valid_search_parameters
-    params.permit(:first_name, :last_name, :create_at, :updated_at)
+    params.permit(:id, :first_name, :last_name, :created_at, :updated_at)
   end
 end
