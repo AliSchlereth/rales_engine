@@ -22,24 +22,24 @@ describe "GET /api/v1/customers/:id/invoices" do
   end
 end
 
-describe "GET /api/v1/merchants/:id/invoices" do
-  context "a single merchant's invoices" do
-    xit "returns only the invoices that belong to one merchant" do
-      customer = create(:customer)
-      merchant_1 = create(:merchant)
-      merchant_2 = create(:merchant)
-      merchant_1.invoices.create(customer_id: customer.id, status: "success", merchant_id: merchant_1.id)
-      merchant_1.invoices.create(customer_id: customer.id, status: "fail", merchant_id: merchant_1.id)
-      merchant_1.invoices.create(customer_id: customer.id, status: "success", merchant_id: merchant_1.id)
-      merchant_2.invoices.create(customer_id: customer.id, status: "success", merchant_id: merchant_2.id)
-      merchant_2.invoices.create(customer_id: customer.id, status: "fail", merchant_id: merchant_2.id)
+describe "GET /api/v1/customers/:id/transactions" do
+  context "a single customer's transactions" do
+    it "returns only the transactions that belong to one customer" do
+      customer_1 = create(:customer)
+      customer_2 = create(:customer)
+      invoice_1 = create(:invoice, customer_id: customer_1.id)
+      invoice_2 = create(:invoice, customer_id: customer_1.id)
+      invoice_3 = create(:invoice, customer_id: customer_2.id)
+      transaction_1 = create(:transaction, invoice_id: invoice_1.id)
+      transaction_2 = create(:transaction, invoice_id: invoice_2.id)
+      transaction_3 = create(:transaction, invoice_id: invoice_3.id)
       
-      get "/api/v1/merchants/#{merchant_1.id}/invoices"
+      get "/api/v1/customers/#{customer_1.id}/transactions"
       
-      json_merchant_invoices = JSON.parse(response.body)
+      json_customer_transactions = JSON.parse(response.body)
       
       expect(response).to be_success
-      expect(json_merchant_invoices.count).to eq(3)
+      expect(json_customer_transactions.count).to eq(2)
     end
   end
 end
