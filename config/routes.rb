@@ -20,29 +20,39 @@ Rails.application.routes.draw do
       get '/invoice_items/find', to: "invoice_items/search#show"
       get '/invoice_items/find_all', to: "invoice_items/search#index"
       get '/invoice_items/random', to: "invoice_items/random#show"
+      
       resources :merchants, only: [:index, :show] do
         resources :items, only: [:index], controller: "merchants/items"
         resources :invoices, only: [:index], controller: "merchants/invoices"
       end
-      resources :invoices, only: [:index, :show]
+      
+      resources :invoices, only: [:index, :show] do
+        resources :transactions, only: [:index], controller: "invoices/transactions"
+      end
+      
       resources :items, only: [:index, :show] do
         get '/merchant', to: "items/merchants#show"
         resources :invoice_items, only: [:index], controller: "items/invoice_items"
       end
+      
       resources :invoice_items, only: [:index, :show] do
         get '/invoice', to: "invoice_items/invoices#show"
       end
+      
       resources :customers, only: [:index, :show] do
         resources :invoices, only: [:index], controller: "customers/invoices"
         resources :transactions, only: [:index], controller: "customers/transactions"
       end
+      
       resources :transactions, only: [:index, :show] do
         get '/invoice', to: "transactions/invoices#show" 
       end
+      
       resources :invoice_items, only: [:index, :show] do
         get '/invoice', to: "invoice_items/invoices#show"
         get '/item', to: "invoice_items/items#show"
       end
+      
       resources :customers, only: [:index, :show]
       resources :transactions, only: [:index, :show]
     end
