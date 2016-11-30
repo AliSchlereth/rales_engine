@@ -36,4 +36,24 @@ describe "items relationship endpoints" do
       expect(result.count).to eq(3)
     end
   end
+  
+  context 'GET /api/v1/invoices/:id/items' do
+    it "returns items associated with an invoice" do
+      merchant = create(:merchant)
+      customer = create(:customer)
+      item_1 = create(:item, merchant_id: merchant.id)
+      item_2 = create(:item, merchant_id: merchant.id)
+      item_3 = create(:item, merchant_id: merchant.id)
+      invoice = create(:invoice, merchant_id: merchant.id, customer_id: customer.id)
+      invoice_item_1 = create(:invoice_item, item_id: item_1.id, invoice_id: invoice.id)
+      invoice_item_2 = create(:invoice_item, item_id: item_2.id, invoice_id: invoice.id)
+      invoice_item_3 = create(:invoice_item, item_id: item_3.id, invoice_id: invoice.id)
+      
+      get "/api/v1/invoices/#{invoice.id}/items"
+      
+      result = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(result.count).to eq(3)
+    end
+  end
 end
