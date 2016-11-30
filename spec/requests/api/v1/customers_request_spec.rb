@@ -41,12 +41,12 @@ describe "customer endpoints" do
   end
 
   context "GET customers/find_all" do
-    it "returns all customers by search parameter" do
+    it "returns all customers by search parameter case insensitive" do
       customer1 = Customer.create(first_name: "Sue", last_name: "Jones")
       customer2 = Customer.create(first_name: "Sue", last_name: "Smith")
 
 
-      get "/api/v1/customers/find_all?first_name=#{customer1.first_name}"
+      get "/api/v1/customers/find_all?first_name=sue"
 
       customers = JSON.parse(response.body)
 
