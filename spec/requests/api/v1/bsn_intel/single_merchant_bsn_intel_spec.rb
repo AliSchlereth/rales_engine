@@ -25,9 +25,8 @@ describe "single merchant business intelligence endpoints" do
     get "/api/v1/merchants/#{@merchant.id}/revenue"
     
     result = JSON.parse(response.body)
-
     expect(response).to be_success
-    expect(result["revenue"]).to eq("4.00")
+    expect(result["revenue"]).to eq("0.03")
   end
 
 end

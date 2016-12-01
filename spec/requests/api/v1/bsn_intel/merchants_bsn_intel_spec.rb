@@ -48,7 +48,6 @@ describe "all merchants business intelligence endpoints" do
     get '/api/v1/merchants/revenue?date=2012-03-27 14:56:04"'
     
     result = JSON.parse(response.body)
-    binding.pry
     expect(response).to be_success
     expect(result["total_revenue"]).to eq("60.00")
   end
