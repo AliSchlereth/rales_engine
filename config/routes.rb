@@ -59,8 +59,8 @@ Rails.application.routes.draw do
 
       resources :items, only: [:index, :show] do
         get '/merchant', to: "items/merchants#show"
-        get '/best_day', to: "items/best_day#show"
         resources :invoice_items, only: [:index], controller: "items/invoice_items"
+        get '/best_day', to: "items/best_day#show"
       end
 
       resources :invoice_items, only: [:index, :show] do
