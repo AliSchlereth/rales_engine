@@ -1,16 +1,11 @@
 class Api::V1::Customers::SearchController < ApplicationController
 
-  def show
-    render json: Customer.find_by(valid_search_parameters)
-  end
-
   def index
-    render json: Customer.where(valid_search_parameters)
+    render json: Customer.find_all_customers(params)
   end
 
-  private
-  
-  def valid_search_parameters
-    params.permit(:id, :first_name, :last_name, :created_at, :updated_at)
+  def show
+    render json: Customer.find_customer(params)
   end
+  
 end
