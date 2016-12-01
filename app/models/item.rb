@@ -14,14 +14,14 @@ class Item < ApplicationRecord
   end
 
   def self.most_revenue(quantity)
-    Item.joins(:invoice_items, invoices: :transactions).merge(Transaction.success)
+    Item.find_items_with_successful_transactions
                                                       .group(:id)
                                                       .order("sum(invoice_items.quantity * invoice_items.unit_price) DESC")
                                                       .limit(quantity)
   end
 
   def self.most_items(quantity)
-    Item.joins(:invoice_items, invoices: :transactions).merge(Transaction.success)
+    Item.find_items_with_successful_transactions
                                                       .group(:id)
                                                       .order("sum(invoice_items.quantity) DESC")
                                                       .limit(quantity)
@@ -47,6 +47,10 @@ class Item < ApplicationRecord
   
   def self.find_all_items(params)
     where(valid_search_parameters(params))
+  end
+  
+  def self.find_items_with_successful_transactions
+    joins(:invoice_items, invoices: :transactions).merge(Transaction.success)
   end
   
   private
