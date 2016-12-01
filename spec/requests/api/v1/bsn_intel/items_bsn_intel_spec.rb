@@ -33,4 +33,13 @@ describe "items business intelligence" do
     expect(response).to be_success
     expect(result.count).to eq(2)
   end
+
+  it "returns the date with the most sales for the given item using the invoice date" do
+    get "/api/v1/items/:id/best_day"
+
+    result = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(result.count).to eq(1)
+  end
 end

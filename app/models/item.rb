@@ -21,7 +21,10 @@ class Item < ApplicationRecord
   end
 
   def self.most_items(quantity)
-    binding.pry
+    Item.joins(:invoice_items, invoices: :transactions).merge(Transaction.success)
+                                                       .group(:id)
+                                                       .order("sum(invoice_items.quantity) DESC")
+                                                       .limit(quantity)
   end
 
 end
