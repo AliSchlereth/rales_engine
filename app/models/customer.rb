@@ -11,4 +11,5 @@ class Customer < ApplicationRecord
     random_position = rand(0..total)
     all[random_position]
   end
+  
 end

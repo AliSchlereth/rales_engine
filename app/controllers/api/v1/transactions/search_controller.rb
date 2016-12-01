@@ -1,16 +1,11 @@
 class Api::V1::Transactions::SearchController < ApplicationController
 
-  def show
-    render json: Transaction.find_by(valid_search_parameters)
-  end
-
   def index
-    render json: Transaction.where(valid_search_parameters)
+    render json: Transaction.find_all_transactions(params)
   end
 
-  private
-  def valid_search_parameters
-    params.permit(:id, :credit_card_number, :result, :invoice_id, :created_at, :updated_at)
+  def show
+    render json: Transaction.find_transaction(params)
   end
 
 end

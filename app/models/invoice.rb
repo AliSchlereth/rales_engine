@@ -4,12 +4,11 @@ class Invoice < ApplicationRecord
   has_many :transactions
   belongs_to :customer
   belongs_to :merchant
-
-  # default_scope -> { order(created_at: :desc)}
-
+  
   def self.invoice_randomizer
     total = all.count - 1
     random_position = rand(0..total)
     all[random_position]
   end
+  
 end
