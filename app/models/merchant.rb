@@ -14,18 +14,25 @@ class Merchant < ActiveRecord::Base
 
   def self.most_revenue(quantity)
     joins(invoices: [:invoice_items, :transactions]).merge(Transaction.success)
-                                                   .group(:id)
-                                                   .order("sum(quantity * unit_price) DESC")
-                                                   .limit(quantity)
+                                                    .group(:id)
+                                                    .order("sum(quantity * unit_price) DESC")
+                                                    .limit(quantity)
   end
 
   def self.most_items(quantity)
     joins(invoices: [:invoice_items, :transactions]).merge(Transaction.success)
-                                                   .group(:id)
-                                                   .order("sum(invoice_items.quantity) DESC")
-                                                   .limit(quantity)
+                                                    .group(:id)
+                                                    .order("sum(invoice_items.quantity) DESC")
+                                                    .limit(quantity)
   end
-
+  
+  def self.revenue_by_date(date)
+    joins(invoices: [:invoice_items, :transactions]).merge(Transaction.success)
+                                                    .where("invoice.created_at = #{date}")
+                                                    .order("sum(quantity * unit_price) DESC")
+                                                    .group(:id)
+  end
+  
   def self.successful
     alskdjflaksjdfkj
   end
