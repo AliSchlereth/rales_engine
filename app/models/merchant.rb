@@ -32,9 +32,15 @@ class Merchant < ActiveRecord::Base
                                                     .sum("invoice_items.quantity * invoice_items.unit_price")
   end
   
-  def single_merchant_revenue
-    invoices.joins(:transactions, :invoice_items).merge(Transaction.success)
+  def single_merchant_revenue(date = nil)
+    if date.nil?
+      invoices.joins(:transactions, :invoice_items).merge(Transaction.success)
                                                   .sum("invoice_items.quantity * invoice_items.unit_price")
+    else
+      invoices.joins(:transactions, :invoice_items).merge(Transaction.success)
+                                                    .where("invoices.created_at = '#{date}'")
+                                                    .sum("invoice_items.quantity * invoice_items.unit_price")
+    end
   end
   
   def self.successful

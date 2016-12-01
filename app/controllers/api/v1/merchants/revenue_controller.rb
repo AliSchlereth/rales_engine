@@ -6,7 +6,7 @@ class Api::V1::Merchants::RevenueController < ApplicationController
   
   def show
     merchant = Merchant.find(params[:merchant_id])
-    render json: merchant.single_merchant_revenue, serializer: RevenueSerializer
+    render json: merchant.single_merchant_revenue(params[:date]), serializer: RevenueSerializer
   end
 
 end
