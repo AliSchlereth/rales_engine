@@ -15,33 +15,38 @@ class Item < ApplicationRecord
 
   def self.most_revenue(quantity)
     Item.joins(:invoice_items, invoices: :transactions).merge(Transaction.success)
-                                                       .group(:id)
-                                                       .order("sum(invoice_items.quantity * invoice_items.unit_price) DESC")
-                                                       .limit(quantity)
+                                                      .group(:id)
+                                                      .order("sum(invoice_items.quantity * invoice_items.unit_price) DESC")
+                                                      .limit(quantity)
   end
 
   def self.most_items(quantity)
     Item.joins(:invoice_items, invoices: :transactions).merge(Transaction.success)
-                                                       .group(:id)
-                                                       .order("sum(invoice_items.quantity) DESC")
-                                                       .limit(quantity)
+                                                      .group(:id)
+                                                      .order("sum(invoice_items.quantity) DESC")
+                                                      .limit(quantity)
   end
 
   def best_day
-    invoices.joins(:transactions, :invoice_items).merge(Transaction.success).group(:created_at, :id).order("sum(invoice_items.quantity) DESC").first.created_at
+    invoices.joins(:transactions, :invoice_items).merge(Transaction.success)
+                                                      .group(:created_at, :id)
+                                                      .order("sum(invoice_items.quantity) DESC")
+                                                      .first.created_at
   end
   
   def self.find_item(params)
     if params[:unit_price]
       price = ((params[:unit_price].to_f) * 100).round()
       find_by(unit_price: price)
-    elsif params[:created_at]
-      where(valid_search_parameters(params)).order(:id).first
-    elsif params[:updated_at]
+    elsif params[:created_at] || params[:updated_at]
       where(valid_search_parameters(params)).order(:id).first
     else
       find_by(valid_search_parameters(params))
     end    
+  end
+  
+  def self.find_all_items(params)
+    where(valid_search_parameters(params))
   end
   
   private
