@@ -66,25 +66,28 @@ describe "items endpoints" do
 
     it "returns the right item for created_at" do
       item_1 = create(:item, created_at: "2012-03-27T14:56:04.000Z")
-      item_2 = create(:item, created_at: "2013-03-27T14:56:04.000Z")
+      item_2 = create(:item, created_at: "2012-03-27T14:56:04.000Z")
+      item_3 = create(:item, created_at: "2013-03-27T14:56:04.000Z")
+
 
       get "/api/v1/items/find?created_at=#{item_1.created_at}"
       result = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(result["id"]).to eq("#{item_1.id}".to_i)
+
+      expect(result["id"]).to eq(item_1.id)
       expect(result["id"]).to_not eq(item_2.id)
     end
 
     it "returns the right item for unit_price" do
-      item_1 = create(:item, unit_price: "274.09")
-      item_2 = create(:item, unit_price: "284.09")
+      item_1 = create(:item, unit_price: 27409)
+      item_2 = create(:item, unit_price: 28409)
 
-      get "/api/v1/items/find?created_at=#{item_1.unit_price}"
+      get "/api/v1/items/find?unit_price=274.09"
       result = JSON.parse(response.body)
 
       expect(response).to be_success
-      expect(result["id"]).to eq("#{item_1.id}".to_i)
+      expect(result["id"]).to eq(item_1.id)
       expect(result["id"]).to_not eq(item_2.id)
 
     end

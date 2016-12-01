@@ -6,9 +6,11 @@ class Api::V1::Items::SearchController < ApplicationController
 
   def show
     if params[:unit_price]
-      price = params[:unit_price].to_i * 100
-      binding.pry
-      render json: Item.find_by(unit_price: "#{price}".to_i)
+      price = ((params[:unit_price].to_f) * 100).round()
+      render json: Item.find_by(unit_price: price)
+    elsif params[:created_at]
+      item = Item.where(valid_search_parameters).order(:id).first
+      render json: item
     else
       render json: Item.find_by(valid_search_parameters)
     end
