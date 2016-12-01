@@ -28,9 +28,8 @@ class Merchant < ActiveRecord::Base
   
   def self.revenue_by_date(date)
     joins(invoices: [:invoice_items, :transactions]).merge(Transaction.success)
-                                                    .group(:id)
                                                     .where("invoices.created_at = '#{date}'")
-                                                    .sum("quantity * unit_price")
+                                                    .sum("invoice_items.quantity * invoice_items.unit_price")
   end
   
   def self.successful
