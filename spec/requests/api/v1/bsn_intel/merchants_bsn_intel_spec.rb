@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "GET /api/v1/merchants/most_revenue?quantity=x" do
+describe "all merchants business intelligence endpoints" do
   before :each do
     merchant1, merchant2, merchant3, merchant4 = create_list(:merchant, 4)
     item1 = create(:item, merchant_id: merchant1.id)
@@ -48,7 +48,6 @@ describe "GET /api/v1/merchants/most_revenue?quantity=x" do
     get '/api/v1/merchants/revenue?date=2012-03-27 14:56:04"'
     
     result = JSON.parse(response.body)
-    binding.pry
     expect(response).to be_success
     expect(result["total_revenue"]).to eq("60.00")
   end

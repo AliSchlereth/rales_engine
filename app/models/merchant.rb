@@ -3,6 +3,7 @@ class Merchant < ActiveRecord::Base
 
   has_many :items
   has_many :invoices
+  has_many :customers, through: :invoices
   has_many :invoice_items, through: :items
 
 
@@ -31,6 +32,24 @@ class Merchant < ActiveRecord::Base
                                                     .where("invoices.created_at = '#{date}'")
                                                     .sum("invoice_items.quantity * invoice_items.unit_price")
   end
+  
+  def single_merchant_revenue(date = nil)
+    if date.nil?
+      invoices.joins(:transactions, :invoice_items).merge(Transaction.success)
+                                                    .sum("invoice_items.quantity * invoice_items.unit_price")
+    else
+      invoices.joins(:transactions, :invoice_items).merge(Transaction.success)
+                                                    .where("invoices.created_at = '#{date}'")
+                                                    .sum("invoice_items.quantity * invoice_items.unit_price")
+    end
+  end
+  
+  def single_merchant_favorite_customer
+    customers.joins(:transactions).merge(Transaction.success)
+                                                    .group(:id)
+                                                    .order("transactions.count DESC")
+                                                    .first  
+  end   
   
   def self.successful
     alskdjflaksjdfkj
