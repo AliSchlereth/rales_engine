@@ -38,7 +38,7 @@ describe "items business intelligence" do
     get "/api/v1/items/#{@item1.id}/best_day"
 
     result = JSON.parse(response.body)
-
+    binding.pry
     expect(response).to be_success
     expect(result.count).to eq(1)
   end
