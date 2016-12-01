@@ -24,4 +24,13 @@ describe "items business intelligence" do
     expect(response).to be_success
     expect(result.count).to eq(2)
   end
+
+  it "returns the top x item instances ranked by total number sold" do
+    get "/api/v1/items/most_items?quantity=2"
+
+    result = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(result.count).to eq(2)
+  end
 end
