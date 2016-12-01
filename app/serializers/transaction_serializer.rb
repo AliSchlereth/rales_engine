@@ -4,4 +4,5 @@ class TransactionSerializer < ActiveModel::Serializer
   def credit_card_number
     object.credit_card_number.to_s
   end
+
 end
