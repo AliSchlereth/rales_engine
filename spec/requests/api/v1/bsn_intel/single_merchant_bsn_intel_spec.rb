@@ -31,7 +31,7 @@ describe "single merchant business intelligence endpoints" do
     expect(result["revenue"]).to eq("0.03")
   end
   
-  xit "returns the total revenue for that merchant for a specific date" do
+  it "returns the total revenue for that merchant for a specific date" do
     get "/api/v1/merchants/#{@merchant.id}/revenue?date=#{@invoice_item1.created_at}"
     
     result = JSON.parse(response.body)

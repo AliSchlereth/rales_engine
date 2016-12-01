@@ -39,17 +39,28 @@ describe "all merchants business intelligence endpoints" do
     expect(result.count).to eq(2)
   end
   
-  xit "returns the total revenue for date x across all merchants" do
-    invoice_extra = create(:invoice, created_at: "2012-03-27 14:56:04")
-    extra_invoice_item1 = create(:invoice_item, quantity: 1, unit_price: 1000, created_at: "2012-03-27 14:56:04", invoice_id: invoice_extra.id)
-    extra_invoice_item2 = create(:invoice_item, quantity: 2, unit_price: 1000, created_at: "2012-03-27 14:56:04", invoice_id: invoice_extra.id)
-    extra_invoice_item3 = create(:invoice_item, quantity: 3, unit_price: 1000, created_at: "2012-03-27 14:56:04", invoice_id: invoice_extra.id)
+  it "returns the total revenue for date x across all merchants" do
+    date = "2012-03-27 14:56:04"
     
-    get '/api/v1/merchants/revenue?date=2012-03-27 14:56:04"'
+    merchant = Merchant.create(name: "Yay")
+    customer = Customer.create(first_name: "Hello", last_name: "Goodbye")
+    invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped", created_at: date)
+    item = Item.create(merchant_id: merchant.id, name: "Coffee", description: "scrumptious", unit_price: 500)
+    invoice_item = InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 4, unit_price: 500)
+    transaction = Transaction.create(credit_card_number: 4815162342, result: "success", invoice_id: invoice.id)
+    
+    merchant2 = Merchant.create(name: "Nooooo")
+    customer2 = Customer.create(first_name: "Hello", last_name: "Goodbye")
+    invoice2 = Invoice.create(customer_id: customer2.id, merchant_id: merchant2.id, status: "shipped", created_at: date)
+    item2 = Item.create(merchant_id: merchant2.id, name: "Coffee", description: "scrumptious", unit_price: 500)
+    invoice_item2 = InvoiceItem.create(item_id: item2.id, invoice_id: invoice2.id, quantity: 4, unit_price: 500)
+    transaction = Transaction.create(credit_card_number: 4815162342, result: "success", invoice_id: invoice2.id)
+
+    get "/api/v1/merchants/revenue?date=#{date}"
     
     result = JSON.parse(response.body)
     expect(response).to be_success
-    expect(result["total_revenue"]).to eq("60.00")
+    expect(result["total_revenue"]).to eq("40.0")
   end
 
 end
