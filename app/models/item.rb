@@ -20,4 +20,8 @@ class Item < ApplicationRecord
                                                        .limit(quantity)
   end
 
+  def self.most_items(quantity)
+    binding.pry
+  end
+
 end

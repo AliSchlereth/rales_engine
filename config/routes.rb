@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       get '/items/find_all', to: "items/search#index"
       get '/items/random', to: "items/random#show"
       get '/items/most_revenue', to: "items/most_revenue#index"
+      get '/items/most_items', to: "items/most_items#index"
 
       get '/invoice_items/find', to: "invoice_items/search#show"
       get '/invoice_items/find_all', to: "invoice_items/search#index"
