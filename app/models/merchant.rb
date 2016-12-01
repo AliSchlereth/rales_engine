@@ -6,7 +6,6 @@ class Merchant < ActiveRecord::Base
   has_many :customers, through: :invoices
   has_many :invoice_items, through: :items
 
-
   def self.merchant_randomizer
     total = all.count - 1
     random_position = rand(0..total)
