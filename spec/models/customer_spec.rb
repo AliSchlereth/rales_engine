@@ -26,5 +26,14 @@ RSpec.describe Customer, type: :model do
       expect(customer).to respond_to(:invoices)
     end
   end
+  
+  context "randomizer" do
+    it "only returns one random customer" do
+      customer1, customer2 = create_list(:customer, 2)
+      
+      result = [Customer.customer_randomizer]
+      expect(result.count).to eq(1)
+    end
+  end
 
 end

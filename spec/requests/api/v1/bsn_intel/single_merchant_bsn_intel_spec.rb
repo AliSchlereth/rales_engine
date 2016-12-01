@@ -67,3 +67,9 @@ describe "single merchant business intelligence endpoints" do
   end
 
 end
+
+
+
+# merchant.find_by_sql(SELECT customer.* FROM merchants INNER JOIN invoices ON invoices.merchant_id = merchants.id INNER JOIN invoice_items ON invoice_items.invoice_id = invoices.id INNER JOIN transactions ON transactions.invoice_id = invoices.id INNER JOIN customers ON invoices.customer_id = customers.id WHERE (transactions.result = "failed" EXCEPT [ ALL ] transactions.result = "success") GROUP BY customers.id;)
+# Merchant.find_by_sql("SELECT customer.* FROM merchants INNER JOIN invoices ON invoices.merchant_id = merchants.id INNER JOIN invoice_items ON invoice_items.invoice_id = invoices.id INNER JOIN transactions ON transactions.invoice_id = invoices.id INNER JOIN customers ON invoices.customer_id = customers.id WHERE ((SELECT transactions.result = 'failed') EXCEPT (SELECT transactions.result = 'success')) GROUP BY customers.id;")
+# Merchant.find_by_sql("SELECT customer.* FROM merchants INNER JOIN invoices ON invoices.merchant_id = merchants.id INNER JOIN invoice_items ON invoice_items.invoice_id = invoices.id INNER JOIN transactions ON transactions.invoice_id = invoices.id INNER JOIN customers ON invoices.customer_id = customers.id WHERE (Merchants.id = '2') WHERE ((SELECT transactions.result = 'failed') EXCEPT (SELECT transactions.result = 'success')) GROUP BY customers.id;")
