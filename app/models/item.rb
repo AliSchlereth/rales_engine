@@ -21,7 +21,13 @@ class Item < ApplicationRecord
   end
 
   def self.most_items(quantity)
-    binding.pry
+    Item.joins(:invoice_items, invoices: :transactions).merge(Transaction.success)
+                                                       .group(:id)
+                                                       .order("sum(invoice_items.quantity) DESC")
+                                                       .limit(quantity)
   end
 
+  def best_day
+    invoices.joins(:transactions, :invoice_items).merge(Transaction.success).group(:created_at, :id).order("sum(invoice_items.quantity) DESC").first.created_at
+  end
 end

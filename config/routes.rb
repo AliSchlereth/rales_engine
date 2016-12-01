@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index], controller: "merchants/invoices"
         get '/revenue', to: 'merchants/revenue#show'
         get '/favorite_customer', to: 'merchants/favorite_customer#show'
+
       end
 
       resources :invoices, only: [:index, :show] do
@@ -59,6 +60,7 @@ Rails.application.routes.draw do
       resources :items, only: [:index, :show] do
         get '/merchant', to: "items/merchants#show"
         resources :invoice_items, only: [:index], controller: "items/invoice_items"
+        get '/best_day', to: "items/best_day#show"
       end
 
       resources :invoice_items, only: [:index, :show] do

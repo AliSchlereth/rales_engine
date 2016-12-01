@@ -2,11 +2,11 @@ require "rails_helper"
 
 describe "items business intelligence" do
   before :each do
-    item1, item2, item3 = create_list(:item, 3)
+    @item1, @item2, @item3 = create_list(:item, 3)
     invoice1, invoice2, invoice3 = create_list(:invoice, 3)
-    invoice_item1 = create(:invoice_item, item_id: item1.id, invoice_id: invoice1.id)
-    invoice_item2 = create(:invoice_item, item_id: item2.id, invoice_id: invoice2.id)
-    invoice_item3 = create(:invoice_item, item_id: item3.id, invoice_id: invoice3.id)
+    invoice_item1 = create(:invoice_item, item_id: @item1.id, invoice_id: invoice1.id)
+    invoice_item2 = create(:invoice_item, item_id: @item2.id, invoice_id: invoice2.id)
+    invoice_item3 = create(:invoice_item, item_id: @item3.id, invoice_id: invoice3.id)
     transaction1 = create(:transaction, invoice_id: invoice1.id, result: "success")
     transaction2 = create(:transaction, invoice_id: invoice1.id, result: "success")
     transaction3 = create(:transaction, invoice_id: invoice2.id, result: "success")
@@ -33,4 +33,13 @@ describe "items business intelligence" do
     expect(response).to be_success
     expect(result.count).to eq(2)
   end
+
+  # it "returns the date with the most sales for the given item using the invoice date" do
+  #   get "/api/v1/items/#{@item1.id}/best_day"
+  #
+  #   result = JSON.parse(response.body)
+  #   binding.pry
+  #   expect(response).to be_success
+  #   expect(result.count).to eq(1)
+  # end
 end
