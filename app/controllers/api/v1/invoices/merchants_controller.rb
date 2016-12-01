@@ -5,5 +5,4 @@ class Api::V1::Invoices::MerchantsController < ApplicationController
     render json: invoice.merchant
   end
 
-
 end
