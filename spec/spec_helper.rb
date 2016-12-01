@@ -15,7 +15,9 @@
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+	add_filter "/spec/"
+end
 
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration

@@ -30,4 +30,24 @@ class Item < ApplicationRecord
   def best_day
     invoices.joins(:transactions, :invoice_items).merge(Transaction.success).group(:created_at, :id).order("sum(invoice_items.quantity) DESC").first.created_at
   end
+  
+  def self.find_item(params)
+    if params[:unit_price]
+      price = ((params[:unit_price].to_f) * 100).round()
+      find_by(unit_price: price)
+    elsif params[:created_at]
+      where(valid_search_parameters(params)).order(:id).first
+    elsif params[:updated_at]
+      where(valid_search_parameters(params)).order(:id).first
+    else
+      find_by(valid_search_parameters(params))
+    end    
+  end
+  
+  private
+  
+  def self.valid_search_parameters(params)
+    params.permit(:id, :name, :description, :merchant_id, :unit_price, :created_at, :updated_at)
+  end  
+  
 end
