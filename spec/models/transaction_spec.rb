@@ -32,4 +32,25 @@ RSpec.describe Transaction, type: :model do
     end
   end
 
+  context "scope " do
+    it "success only returns successful transactions" do
+      invoice = create(:invoice)
+      transaction1 = Transaction.create(credit_card_number: 123, result: "success", invoice: invoice)
+      transaction2 = Transaction.create(credit_card_number: 123, result: "failed", invoice: invoice)
+      valid = Transaction.success
+
+      expect(valid[0].id).to eq(transaction1.id)
+    end
+
+    it "failed only returns failed transactions" do
+      invoice = create(:invoice)
+      transaction1 = Transaction.create(credit_card_number: 123, result: "success", invoice: invoice)
+      transaction2 = Transaction.create(credit_card_number: 123, result: "failed", invoice: invoice)
+      valid = Transaction.failed
+
+      expect(valid[0].id).to eq(transaction2.id)
+    end
+
+  end
+
 end
