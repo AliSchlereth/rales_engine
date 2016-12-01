@@ -44,7 +44,7 @@ class Merchant < ActiveRecord::Base
     end
   end
   
-  def favorite_customer
+  def single_merchant_favorite_customer
     customers.joins(:transactions).merge(Transaction.success)
                                                     .group(:id)
                                                     .order("transactions.count DESC")
