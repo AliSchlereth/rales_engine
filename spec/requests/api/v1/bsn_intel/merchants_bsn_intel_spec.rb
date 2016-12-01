@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "GET /api/v1/merchants/most_revenue?quantity=x" do
+describe "all merchants business intelligence endpoints" do
   before :each do
     merchant1, merchant2, merchant3, merchant4 = create_list(:merchant, 4)
     item1 = create(:item, merchant_id: merchant1.id)
