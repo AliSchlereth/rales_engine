@@ -66,21 +66,9 @@ class Merchant < ActiveRecord::Base
   def self.find_merchants_with_successful_transactions
     joins(invoices: [:invoice_items, :transactions]).merge(Transaction.success)
   end
-  
-  def self.find_all_merchants(params)
-    where(valid_search_parameters(params))
-  end
-  
+    
   def find_successful_transactions_for_single_merchant
     invoices.joins(:transactions, :invoice_items).merge(Transaction.success)
   end
-  
-  def self.find_merchant(params)
-    find_by(valid_search_parameters(params))
-  end
-    
-  def self.valid_search_parameters(params)
-    params.permit(:id, :name, :created_at, :updated_at)
-  end
-
+      
 end
