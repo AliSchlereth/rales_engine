@@ -12,13 +12,13 @@ class Customer < ApplicationRecord
     all[random_position]
   end
   
-  def self.find_customer(params)
-    find_by(valid_search_parameters(params))
-  end
-  
-  def self.find_all_customers(params)
-    where(valid_search_parameters(params))
-  end
+  # def self.find_customer(params)
+  #   find_by(valid_search_parameters(params))
+  # end
+  # 
+  # def self.find_all_customers(params)
+  #   where(valid_search_parameters(params))
+  # end
   
   def favorite_merchant
     merchants.joins(invoices: :transactions).merge(Transaction.success)
