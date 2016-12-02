@@ -40,9 +40,9 @@ RSpec.describe Customer, type: :model do
     xit "finds a customer by search criteria" do
       customer1, customer2 = create_list(:customer, 2)
       customer3 = create(:customer, first_name: "Francis", last_name: "Drake")
-      params = {:first_name=>"Francis"}
+			customer_hash = customer3.to_s
 
-      result = Customer.find_customer(params)
+      result = Customer.find_customer(customer_hash)
       expect(result.first_name).to eq("Francis")
     end
   end

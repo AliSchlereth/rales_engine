@@ -32,7 +32,7 @@ RSpec.describe Transaction, type: :model do
     end
   end
 
-  context "scope " do
+  context "scope" do
     it "success only returns successful transactions" do
       invoice = create(:invoice)
       transaction1 = Transaction.create(credit_card_number: 123, result: "success", invoice: invoice)
@@ -50,7 +50,16 @@ RSpec.describe Transaction, type: :model do
 
       expect(valid[0].id).to eq(transaction2.id)
     end
-
+  end
+  
+  context "transaction randomizer" do
+    it "returns a random transaction" do
+      transaction1, transaction2 = create_list(:transaction, 2)
+      
+      result = [Transaction.transaction_randomizer]
+      expect(result.count).to eq(1)
+      expect(result[0].credit_card_number).to be_truthy      
+    end
   end
 
 end
