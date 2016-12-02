@@ -42,7 +42,7 @@ Now, you'll need to make sure your PostgreSQL database is running. If you've got
 
 a small elephant at the top of your screen: great. If not, spin up your PostgreSQL app.
 
-(If you don't have the app, go [here](http://postgresapp.com/) and follow the install isntructions.)
+(If you don't have the app, go [here](http://postgresapp.com/) and follow the install instructions.)
 
 ### Fifth:
 Next: run the following command in your terminal:
