@@ -75,7 +75,7 @@ RSpec.describe Invoice, type: :model do
 			result = [Invoice.invoice_randomizer]
 
 			expect(result.count).to eq(1)
-			expect(result[0].status).to be_truthy 
+			expect(result[0].status).to be_truthy
 		end
 	end
 

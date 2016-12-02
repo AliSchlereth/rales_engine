@@ -42,4 +42,15 @@ RSpec.describe Item, type: :model do
     end
   end
 
+  context "randomizer" do
+    it "returns a single item" do
+      item1, item2 = create_list(:item, 2)
+
+      result = [Item.item_randomizer]
+
+      expect(result.count).to eq(1)
+      expect(result[0].description).to be_truthy
+    end
+  end
+
 end
