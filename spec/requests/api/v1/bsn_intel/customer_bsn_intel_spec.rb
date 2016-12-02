@@ -21,8 +21,8 @@ describe "customer business intelligence endpoints" do
       result = JSON.parse(response.body)
       
       expect(response).to be_success
-      expect(result.merchant_id).to eq(merchant1.id)
-      expect(result.name).to eq(merchant1.name)
+      expect(result["id"]).to eq(merchant1.id)
+      expect(result["name"]).to eq(merchant1.name)
     end
   end
 end
