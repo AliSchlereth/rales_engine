@@ -109,10 +109,18 @@ RSpec.describe Merchant, type: :model do
     end
 
     it "returns the total revenue for that merchant across all transactions" do
-      result = @merchant1.single_merchant_revenue
+      result = @merchant2.single_merchant_revenue
 
       expect(result).to be_a(Integer)
       expect(result).to eq(1)
     end
+
+    it "returns the total revenue for a merchant across all successful transactions" do
+      result = @merchant1.single_merchant_revenue
+
+      expect(@merchant1.invoices.count).to eq(2)
+      expect(result).to eq(1)
+    end
+
   end
 end
