@@ -146,5 +146,7 @@ RSpec.describe Merchant, type: :model do
       expect(result.count).to eq(1)
     end
 
+    
+
   end
 end
