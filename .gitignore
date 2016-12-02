@@ -21,6 +21,3 @@
 
 # Ignore simplecov coverage
 coverage/
-
-# Ignore csv files
-data/

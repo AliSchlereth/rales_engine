@@ -55,4 +55,15 @@ RSpec.describe InvoiceItem, type: :model do
       expect(invoice_item).to respond_to(:invoice)
     end
   end
+
+  context "randomizer" do
+    it "returns a single invoice item" do
+      invoice_item1, invoice_item2 = create_list(:invoice_item, 2)
+
+      result = [InvoiceItem.invoice_item_randomizer]
+      expect(result.count).to eq(1)
+      expect(result[0].quantity).to be_truthy
+    end
+  end
+
 end
