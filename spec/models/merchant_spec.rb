@@ -24,4 +24,14 @@ RSpec.describe Merchant, type: :model do
       expect(merchant).to respond_to(:invoices)
     end
   end
+  
+  context "merchant randomizer" do
+    it "returns a random merchant" do
+      merchant1, merchant2 = create_list(:merchant, 2)
+      
+      result = [Merchant.merchant_randomizer]
+      expect(result.count).to eq(1)
+      expect(result[0].name).to be_truthy      
+    end
+  end
 end
