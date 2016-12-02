@@ -53,7 +53,7 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  context "item request methods" do
+  context "item bsn intel methods" do
     before :each do
       @item1, @item2, @item3 = create_list(:item, 3)
       @invoice1, @invoice2, @invoice3 = create_list(:invoice, 3)
