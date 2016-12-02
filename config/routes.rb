@@ -33,15 +33,6 @@ Rails.application.routes.draw do
       get '/invoice_items/random', to: "invoice_items/random#show"
 
       resources :merchants, only: [:index, :show] do
-        # collection do
-        #   # get '/merchants/find', to: "merchants/search#show"
-        #   get 'find', to: 'merchants/search#show'
-        # end
-        #
-        # member do
-        #   get 'items', to: 'merchants/items#index' #api/v1/merchants/17/items
-        #   get 'invoices', to: 'merchants/invoices#index'
-        # end
         resources :items, only: [:index], controller: "merchants/items"
         resources :invoices, only: [:index], controller: "merchants/invoices"
         get '/revenue', to: 'merchants/revenue#show'

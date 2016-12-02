@@ -35,18 +35,7 @@ RSpec.describe Customer, type: :model do
       expect(result.count).to eq(1)
     end
   end
-
-  context "find_customer" do
-    xit "finds a customer by search criteria" do
-      customer1, customer2 = create_list(:customer, 2)
-      customer3 = create(:customer, first_name: "Francis", last_name: "Drake")
-			customer_hash = customer3.to_s
-
-      result = Customer.find_customer(customer_hash)
-      expect(result.first_name).to eq("Francis")
-    end
-  end
-
+  
   context "favorite merchant" do
     it "finds a single merchant by most transactions" do
       customer = create(:customer)
