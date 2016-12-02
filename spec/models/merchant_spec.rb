@@ -122,5 +122,22 @@ RSpec.describe Merchant, type: :model do
       expect(result).to eq(1)
     end
 
+    it "returns the total revenue for that merchant for a specific invoice date x as an integer" do
+      date = "2012-03-27 14:56:04"
+
+      merchant = Merchant.create(name: "Yay")
+      customer = Customer.create(first_name: "Hello", last_name: "Goodbye")
+      invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped", created_at: date)
+      item = Item.create(merchant_id: merchant.id, name: "Coffee", description: "scrumptious", unit_price: 500)
+      invoice_item = InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 4, unit_price: 500)
+      transaction = Transaction.create(credit_card_number: 4815162342, result: "success", invoice_id: invoice.id)
+
+      result = merchant.single_merchant_revenue(date)
+      revenue = invoice_item.quantity * invoice_item.unit_price
+
+      expect(result).to be_a(Integer)
+      expect(result).to eq(revenue)
+    end
+
   end
 end
