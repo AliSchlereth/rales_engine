@@ -139,5 +139,12 @@ RSpec.describe Merchant, type: :model do
       expect(result).to eq(revenue)
     end
 
+    it "returns the customer who has conducted the most total number of successful transactions" do
+      result = [@merchant1.single_merchant_favorite_customer]
+
+      expect(result[0]).to be_a(Customer)
+      expect(result.count).to eq(1)
+    end
+
   end
 end
