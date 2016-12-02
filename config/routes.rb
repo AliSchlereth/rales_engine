@@ -46,7 +46,7 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index], controller: "merchants/invoices"
         get '/revenue', to: 'merchants/revenue#show'
         get '/favorite_customer', to: 'merchants/favorite_customer#show'
-
+        get '/customers_with_pending_invoices', to: 'merchants/customers_with_pending_invoices#index'
       end
 
       resources :invoices, only: [:index, :show] do
@@ -70,6 +70,7 @@ Rails.application.routes.draw do
       resources :customers, only: [:index, :show] do
         resources :invoices, only: [:index], controller: "customers/invoices"
         resources :transactions, only: [:index], controller: "customers/transactions"
+        get '/favorite_merchant', to: 'customers/merchants#show'
       end
 
       resources :transactions, only: [:index, :show] do

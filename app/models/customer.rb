@@ -20,6 +20,12 @@ class Customer < ApplicationRecord
     where(valid_search_parameters(params))
   end
   
+  def favorite_merchant
+    merchants.joins(invoices: :transactions).merge(Transaction.success)
+                                            .order("transactions.count DESC")
+                                            .group(:id).first
+  end
+  
   private
   
   def self.valid_search_parameters(params)

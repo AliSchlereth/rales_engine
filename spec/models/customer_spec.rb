@@ -26,5 +26,25 @@ RSpec.describe Customer, type: :model do
       expect(customer).to respond_to(:invoices)
     end
   end
+  
+  context "randomizer" do
+    it "only returns one random customer" do
+      customer1, customer2 = create_list(:customer, 2)
+      
+      result = [Customer.customer_randomizer]
+      expect(result.count).to eq(1)
+    end
+  end
+  
+  context "find_customer" do
+    xit "finds a customer by search criteria" do
+      customer1, customer2 = create_list(:customer, 2)
+      customer3 = create(:customer, first_name: "Francis", last_name: "Drake")
+      params = {:first_name=>"Francis"}
+
+      result = Customer.find_customer(params)
+      expect(result.first_name).to eq("Francis")
+    end
+  end
 
 end
