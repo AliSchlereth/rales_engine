@@ -35,5 +35,16 @@ RSpec.describe Customer, type: :model do
       expect(result.count).to eq(1)
     end
   end
+  
+  context "find_customer" do
+    it "finds a customer by search criteria" do
+      customer1, customer2 = create_list(:customer, 2)
+      customer3 = create(:customer, first_name: "Francis", last_name: "Drake")
+      params = {:first_name=>"Francis"}
+
+      result = Customer.find_customer(params)
+      expect(result.first_name).to eq("Francis")
+    end
+  end
 
 end

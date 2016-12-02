@@ -50,6 +50,17 @@ class Merchant < ActiveRecord::Base
                                                     .first  
   end   
   
+  def customers_with_pending_invoices
+    Customer.find_by_sql("SELECT customers.* FROM customers
+                          INNER JOIN invoices ON invoices.customer_id = customers.id 
+                          WHERE invoices.merchant_id = #{self.id}
+                          EXCEPT
+                          SELECT customers.* FROM customers
+                          INNER JOIN invoices ON invoices.customer_id = customers.id 
+                          INNER JOIN transactions ON transactions.invoice_id = invoices.id 
+                          WHERE invoices.merchant_id=#{self.id} AND transactions.result ='success'")  
+  end
+  
   private
   
   def self.find_merchants_with_successful_transactions

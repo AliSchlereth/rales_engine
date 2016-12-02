@@ -56,7 +56,7 @@ describe "single merchant business intelligence endpoints" do
     expect(result["first_name"]).to eq("#{@customer_2.first_name}")
   end
   
-  xit "returns a collection of customers who have pending invoices" do
+  it "returns a collection of customers who have pending invoices" do
     failed_customer = create(:customer)
     
     get "/api/v1/merchants/#{@merchant.id}/customers_with_pending_invoices"
@@ -70,6 +70,3 @@ end
 
 
 
-# merchant.find_by_sql(SELECT customer.* FROM merchants INNER JOIN invoices ON invoices.merchant_id = merchants.id INNER JOIN invoice_items ON invoice_items.invoice_id = invoices.id INNER JOIN transactions ON transactions.invoice_id = invoices.id INNER JOIN customers ON invoices.customer_id = customers.id WHERE (transactions.result = "failed" EXCEPT [ ALL ] transactions.result = "success") GROUP BY customers.id;)
-# Merchant.find_by_sql("SELECT customer.* FROM merchants INNER JOIN invoices ON invoices.merchant_id = merchants.id INNER JOIN invoice_items ON invoice_items.invoice_id = invoices.id INNER JOIN transactions ON transactions.invoice_id = invoices.id INNER JOIN customers ON invoices.customer_id = customers.id WHERE ((SELECT transactions.result = 'failed') EXCEPT (SELECT transactions.result = 'success')) GROUP BY customers.id;")
-# Merchant.find_by_sql("SELECT customer.* FROM merchants INNER JOIN invoices ON invoices.merchant_id = merchants.id INNER JOIN invoice_items ON invoice_items.invoice_id = invoices.id INNER JOIN transactions ON transactions.invoice_id = invoices.id INNER JOIN customers ON invoices.customer_id = customers.id WHERE (Merchants.id = '2') WHERE ((SELECT transactions.result = 'failed') EXCEPT (SELECT transactions.result = 'success')) GROUP BY customers.id;")
