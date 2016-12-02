@@ -38,6 +38,7 @@ RSpec.describe Merchant, type: :model do
   context "merchant bsn intel methods" do
     before :each do
       @merchant1, @merchant2, @merchant3, @merchant4 = create_list(:merchant, 4)
+      customer = create(:customer)
       item1 = create(:item, merchant_id: @merchant1.id)
       item2 = create(:item, merchant_id: @merchant1.id)
       item3 = create(:item, merchant_id: @merchant2.id)
@@ -46,6 +47,7 @@ RSpec.describe Merchant, type: :model do
       invoice2 = create(:invoice, merchant_id: @merchant1.id)
       invoice3 = create(:invoice, merchant_id: @merchant2.id)
       invoice4 = create(:invoice, merchant_id: @merchant3.id)
+      invoice5 = create(:invoice, merchant_id: @merchant1.id, customer_id: customer.id)
       invoice_item1 = create(:invoice_item, item_id: item1.id, invoice_id: invoice1.id)
       invoice_item2 = create(:invoice_item, item_id: item2.id, invoice_id: invoice2.id)
       invoice_item3 = create(:invoice_item, item_id: item3.id, invoice_id: invoice3.id)
@@ -54,6 +56,7 @@ RSpec.describe Merchant, type: :model do
       transaction = create(:transaction, result: "failed", invoice_id: invoice2.id)
       transaction = create(:transaction, result: "success", invoice_id: invoice3.id)
       transaction = create(:transaction, result: "success", invoice_id: invoice4.id)
+      transaction5 = create(:transaction, result: "failed", invoice_id: invoice5.id)
     end
 
     it "returns the top 2 merchants ranked by total revenue" do
@@ -118,7 +121,7 @@ RSpec.describe Merchant, type: :model do
     it "returns the total revenue for a merchant across all successful transactions" do
       result = @merchant1.single_merchant_revenue
 
-      expect(@merchant1.invoices.count).to eq(2)
+      expect(@merchant1.invoices.count).to eq(3)
       expect(result).to eq(1)
     end
 
@@ -146,7 +149,11 @@ RSpec.describe Merchant, type: :model do
       expect(result.count).to eq(1)
     end
 
-    
+    it "returns a collection of customers which have pending (unpaid) invoices" do
+      result = @merchant1.customers_with_pending_invoices
+
+      expect(result[0]).to be_a(Customer)
+    end
 
   end
 end
