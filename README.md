@@ -1,8 +1,6 @@
 # Rales Engine
 
-Rales Engine! It's like a Sales Engine, but with Rails!
-
-This is a handy little API for gathering and analyzing sales data. 
+A Sales Engine API for gathering and analyzing sales data built with Rails.
 
 [![Code Climate](https://codeclimate.com/github/AliSchlereth/rales_engine/badges/gpa.svg)](https://codeclimate.com/github/AliSchlereth/rales_engine)
 
