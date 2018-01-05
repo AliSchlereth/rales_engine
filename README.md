@@ -127,7 +127,7 @@ tests pass. If not, you might be missing a gem or maybe you should go back and r
 
 * `GET /api/v1/merchants/:id/revenue` returns the total revenue for that merchant across successful transactions
 * `GET /api/v1/merchants/:id/revenue?date=x` returns the total revenue for that merchant for a specific invoice date `x`
-* `GET /api/v1/merchants/:id/favorite_customer` returns the customer who has conducted the most total number of successful transactions.
+* `GET /api/v1/merchants/:id/favorite_customer` returns the customer who has conducted the most total number of successful transactions.  
 *`GET /api/v1/merchants/:id/customers_with_pending_invoices` returns a collection of customers which have pending (unpaid) invoices. A pending invoice has no transactions with a result of `success`.
 
 #### Items
